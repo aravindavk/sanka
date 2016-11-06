@@ -1,0 +1,23 @@
+{
+  "name": "static",
+  "authors": [
+    "Aravinda VK <mail@aravindavk.in>"
+  ],
+  "description": "Static components of Sanka project",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "http://aravindavk.in/sanka",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "pure": "^0.6.0",
+    "qunit": "^2.0.1"
+  }
+}

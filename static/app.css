@@ -1,0 +1,61 @@
+.clear{
+    clear: both;
+    height: 1px;
+    width: 100%;
+}
+body{
+    background-color: #333;
+    font-size: 14px;
+    line-height: 1.5;
+}
+.top-bar{
+    width: 98%;
+    margin: auto;    
+}
+#app{
+    background-color: #eee;
+    padding-top: 10px;
+}
+.container{
+    width: 98%;
+    margin: auto;
+}
+.left{
+    width: 50%;
+    float: left;
+    
+}
+.right{
+    width: 50%;
+    float: left;
+    text-align: right;
+}
+.left textarea, .right textarea{
+    width: 94%;
+    min-height: 900px;
+    border: 1px solid #bbb;
+    padding: 2%;
+}
+.controls{
+    margin-bottom: 10px;
+    padding: 10px;
+}
+.convert-type, .english-numbers{
+    display: inline-block;
+    margin-right: 30px;
+}
+.convert-type input, .english-numbers input{
+    margin-right: 5px;
+}
+.convert-type label{
+    margin-right: 20px;
+}
+.project-summary-bar{
+    background-color: #ffdead;
+}
+.project-summary{
+    width: 98%;
+    margin: auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}

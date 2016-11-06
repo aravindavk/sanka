@@ -1,0 +1,22 @@
+{
+  "name": "knjs",
+  "authors": [
+    "Aravinda VK <mail@aravindavk.in>"
+  ],
+  "description": "knjs dependencies",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "http://aravindavk.in",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "qunit": "^2.0.1"
+  }
+}
