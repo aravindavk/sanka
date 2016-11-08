@@ -57,6 +57,11 @@ Kn.prototype._rearrange_and_replace = function(inp){
         return this._u2a_map[inp];
     }
 
+    // Anuswara visarga with vowels
+    inp = inp.replace(this._REGEX_UNI_VOWEL_PLUS_ANUSVARA_VISARGA, function(match, g1, g2){
+        return that._u2a_map[g1] + that._u2a_map[g2];
+    });
+
     // Detect kaagunitha and convert to ASCII using Map
     inp = inp.replace(this._REGEX_UNI_CONSONANT_PLUS_VOWEL, function(match, g1, g2, g3){
         return that._substitute_ascii(g1, [g2, g3], []);
@@ -126,7 +131,7 @@ Kn.prototype._substitute_ascii = function(base, dep_vowel, vattaksharagalu, appe
     return op;
 }
 
-Kn.prototype.ascii_to_unicode = function (txt, english_numbers){
+Kn.prototype._ascii_to_unicode_word = function (txt, english_numbers){
     that = this;
 
     // Insert ZWNJ if required before converting anything else
@@ -218,7 +223,22 @@ Kn.prototype.ascii_to_unicode = function (txt, english_numbers){
     return txt;
 }
 
-Kn.prototype.unicode_to_ascii = function(txt, english_numbers){
+Kn.prototype.ascii_to_unicode = function (txt, english_numbers){
+    var words = txt.split(" ");
+    var op = [];
+    var l = words.length;
+    for (var i=0; i<l; i++) {
+        var wl = words[i].length;
+        if (wl > 0 && words[i][0] === "$" && words[i][wl-1] === "$") {
+            op.push(words[i].replace(/^\$/g, "").replace(/\$$/g, ""));
+        } else {
+            op.push(this._ascii_to_unicode_word(words[i], english_numbers));
+        }
+    }
+    return op.join(" ");
+}
+
+Kn.prototype._unicode_to_ascii_word = function(txt, english_numbers){
 	var converted = [];
 	var that = this;
     // Split into Kn letters and convert each letter to ASCII
@@ -246,3 +266,17 @@ Kn.prototype.unicode_to_ascii = function(txt, english_numbers){
     return txt;
 }
 
+Kn.prototype.unicode_to_ascii = function (txt, english_numbers){
+    var words = txt.split(" ");
+    var op = [];
+    var l = words.length;
+    for (var i=0; i<l; i++) {
+        var wl = words[i].length;
+        if (wl > 0 && words[i][0] === "$" && words[i][wl-1] === "$") {
+            op.push(words[i].replace(/^\$/g, "").replace(/\$$/g, ""));
+        } else {
+            op.push(this._unicode_to_ascii_word(words[i], english_numbers));
+        }
+    }
+    return op.join(" ");
+}

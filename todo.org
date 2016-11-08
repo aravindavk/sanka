@@ -1,4 +1,6 @@
-** Google Analytics
-** Bower Save
+** DONE Google Analytics
+   CLOSED: [2016-11-06 Sun 23:05]
+** DONE Bower Save
+   CLOSED: [2016-11-06 Sun 23:05]
 ** Introduction Blog
 ** Mail to all interested

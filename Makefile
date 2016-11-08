@@ -27,5 +27,5 @@ clean:
 	cd $(KN_SRC) && make clean
 	rm -f $(ELM_SRC)/app.js
 	rm -f $(STATIC_JS)/app.min.js
-	rm -f $(STATIC_JS)/kn.min.js
+	rm -f $(STATIC_JS)/kn.js
 	rm -f $(STATIC_JS)/tests_kn.js

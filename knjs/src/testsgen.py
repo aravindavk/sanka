@@ -2,14 +2,14 @@ def testsgen_basic(uni, asci):
     u_items = uni.split(" ")
     a_items = asci.split(" ")
     for idx, item in enumerate(a_items):
-        print('QUnit.test("u2a {0}", function(assert){{'
+        print('QUnit.test("u2a {0} => {1}", function(assert){{'
               'assert.strictEqual('
               'kn.unicode_to_ascii("{0}"), "{1}");}});'.format(
                   u_items[idx],
                   item
               ))
 
-        print('QUnit.test("a2u {0}", function(assert){{'
+        print('QUnit.test("a2u {1} => {0}", function(assert){{'
               'assert.strictEqual('
               'kn.ascii_to_unicode("{1}"), "{0}");}});'.format(
                   u_items[idx],
@@ -20,6 +20,10 @@ def testsgen_basic(uni, asci):
 testsgen_basic("ಂ ಃ", "A B")
 testsgen_basic("ಅ ಆ ಇ ಈ ಉ ಊ ಋ ಎ ಏ ಐ ಒ ಓ ಔ ಅಂ ಅಃ",
                "C D E F G H IÄ J K L M N O CA CB")
+testsgen_basic("ಅಂ ಆಂ ಇಂ ಈಂ ಉಂ ಊಂ ಋಂ ಎಂ ಏಂ ಐಂ ಒಂ ಓಂ ಔಂ",
+               "CA DA EA FA GA HA IÄA JA KA LA MA NA OA")
+testsgen_basic("ಅಃ ಆಃ ಇಃ ಈಃ ಉಃ ಊಃ ಋಃ ಎಃ ಏಃ ಐಃ ಒಃ ಓಃ ಔಃ",
+               "CB DB EB FB GB HB IÄB JB KB LB MB NB OB")
 testsgen_basic("ಕ್ ಕ ಕಾ ಕಿ ಕೀ ಕು ಕೂ ಕೃ ಕೆ ಕೇ ಕೈ ಕೊ ಕೋ ಕೌ",
                "Pï PÀ PÁ Q QÃ PÀÄ PÀÆ PÀÈ PÉ PÉÃ PÉÊ PÉÆ PÉÆÃ PË")
 testsgen_basic("ಖ್ ಖ ಖಾ ಖಿ ಖೀ ಖು ಖೂ ಖೃ ಖೆ ಖೇ ಖೈ ಖೊ ಖೋ ಖೌ",

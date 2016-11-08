@@ -38,6 +38,7 @@ makemap("ಗ್ ಗ ಗಾ ಗಿ ಗೀ ಗು ಗೂ ಗೃ ಗೆ ಗೇ ಗ�
         "Uï UÀ UÁ V VÃ UÀÄ UÀÆ UÀÈ UÉ UÉÃ UÉÊ UÉÆ UÉÆÃ UË")
 makemap("ಘ್ ಘ ಘಾ ಘಿ ಘೀ ಘು ಘೂ ಘೃ ಘೆ ಘೇ ಘೈ ಘೊ ಘೋ ಘೌ",
         "Wï WÀ WÁ X XÃ WÀÄ WÀÆ WÀÈ WÉ WÉÃ WÉÊ WÉÆ WÉÆÃ WË")
+makemap("ಙ", "Y")
 makemap("ಚ್ ಚ ಚಾ ಚಿ ಚೀ ಚು ಚೂ ಚೃ ಚೆ ಚೇ ಚೈ ಚೊ ಚೋ ಚೌ",
         "Zï ZÀ ZÁ a aÃ ZÀÄ ZÀÆ ZÀÈ ZÉ ZÉÃ ZÉÊ ZÉÆ ZÉÆÃ ZË")
 makemap("ಛ್ ಛ ಛಾ ಛಿ ಛೀ ಛು ಛೂ ಛೃ ಛೆ ಛೇ ಛೈ ಛೊ ಛೋ ಛೌ",
@@ -47,6 +48,7 @@ makemap("ಜ್ ಜ ಜಾ ಜಿ ಜೀ ಜು ಜೂ ಜೃ ಜೆ ಜೇ ಜ�
 makemap("ಝ್ ಝ ಝಾ ಝಿ ಝೀ ಝು ಝೂ ಝೃ ಝೆ ಝೇ ಝೈ ಝೊ ಝೋ ಝೌ",
         "gÀhiï gÀhÄ gÀhiÁ jhÄ jhÄÃ gÀhÄÄ gÀhÄÆ gÀhÄÈ gÉhÄ gÉhÄÃ "
         "gÉhÄÊ gÉhÆ gÉhÆÃ gÀhiË")
+makemap("ಞ", "k")
 makemap("ಟ್ ಟ ಟಾ ಟಿ ಟೀ ಟು ಟೂ ಟೃ ಟೆ ಟೇ ಟೈ ಟೊ ಟೋ ಟೌ",
         "mï l mÁ n nÃ lÄ lÆ lÈ mÉ mÉÃ mÉÊ mÉÆ mÉÆÃ mË")
 makemap("ಠ್ ಠ ಠಾ ಠಿ ಠೀ ಠು ಠೂ ಠೃ ಠೆ ಠೇ ಠೈ ಠೊ ಠೋ ಠೌ",
@@ -127,10 +129,10 @@ print("}")
 
 vattaksharagalu = ""
 halant = "ಕ್"[1]
-for ele in "ಕಖಗಘಚಛಜಝಟಠಡಢಣತಥದಧನಪಫಬಭಮಯರಲವಶಷಸಹಳ":
+for ele in "ಕಖಗಘಙಚಛಜಝಞಟಠಡಢಣತಥದಧನಪಫಬಭಮಯರಲವಶಷಸಹಳ":
     vattaksharagalu += halant + ele + " "
 
-ascii_vattaksharagalu = "Ì Í Î Ï Ñ Ò Ó Ô Ö × Ø Ù Ú Û Ü Ý Þ ß à á â ã ä å æ è é ê ë ì í î"
+ascii_vattaksharagalu = "Ì Í Î Ï Ð Ñ Ò Ó Ô Õ Ö × Ø Ù Ú Û Ü Ý Þ ß à á â ã ä å æ è é ê ë ì í î"
 makemap_vattakshara(vattaksharagalu.strip(), ascii_vattaksharagalu)
 dep_vowels = "್ ಾ ಿ ೀ ು ೂ ೃ ೆ ೇ ೈ ೊ ೋ ೌ ಂ ಃ"
 
@@ -198,7 +200,7 @@ print("Kn.prototype._REGEX_UNI_ASCII_ARKAVATTU = new RegExp('"
           dep_vowels="".join(exports_data["dep_vowels"])))
 
 print("Kn.prototype._REGEX_UNI_REPH_BEFORE_CONVERT = new RegExp('"
-      "[^{halant}]([{uni_ra}])"
+      "[^{halant}]?([{uni_ra}])"
       "({halant}[{consonants}])"
       "({halant}[{consonants}])?"
       "({halant}[{consonants}])?"
@@ -234,6 +236,11 @@ print("Kn.prototype._REGEX_UNI_VATTAKSHARA = new RegExp('"
           halant=exports_data["halant"],
           dep_vowels="".join(exports_data["dep_vowels"])))
 
+
+print("Kn.prototype._REGEX_UNI_VOWEL_PLUS_ANUSVARA_VISARGA = new RegExp('"
+      "^([{vowels}])([{anusvara_visarga}])$', 'g');".format(
+          vowels="".join(exports_data["vowels"]),
+          anusvara_visarga="".join(exports_data["anusvara_visarga"])))
 
 print("Kn.prototype._REGEX_UNI_CONSONANT_PLUS_VOWEL = new RegExp('"
       "^([{consonants}])([{dep_vowels}])?([{dep_vowels}])?$', 'g');".format(
