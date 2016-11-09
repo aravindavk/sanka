@@ -1,12 +1,14 @@
 port module Converter exposing (..)
 
+import String
 import Html exposing (..)
 import Html.Attributes exposing ( class
                                 , placeholder
                                 , type'
                                 , checked
                                 , readonly
-                                , value)
+                                , value
+                                , title)
 import Html.App as Html
 import Html.Events exposing ( onInput
                             , onCheck
@@ -94,7 +96,13 @@ placeholderTextRight a2u =
 
 view : Model -> Html Msg
 view model =
-  div [class "container"] [
+  let
+    num_words = if model.inputText == "" then
+                  0
+                else
+                  (List.length (String.words model.inputText))
+  in
+    div [class "container"] [
          div [class "controls"] [
                 div [class "english-numbers" ] [
                        label [] [
@@ -123,7 +131,11 @@ view model =
                ]
         , div [class "clear"][]
         , div [class "left"] [
-                  text (placeholderTextLeft model.a2u)
+                  span [ class "num-words"
+                       , title ((toString num_words) ++ " ಪದ(ಗಳು)")] [
+                          text ((toString num_words))
+                         ]
+                , text (placeholderTextLeft model.a2u)
                 , textarea [ onInput Check
                            , value model.inputText ] []
                 ]

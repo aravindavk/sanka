@@ -59,3 +59,12 @@ body{
     padding-top: 20px;
     padding-bottom: 20px;
 }
+.num-words {
+    display: inline-block;
+    float: right;
+    margin-right: 2%;
+    background-color: #333;
+    padding: 5px 5px;
+    color: #fff;
+    margin-top: -10px;
+}
