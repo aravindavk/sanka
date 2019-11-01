@@ -1,5 +1,5 @@
-ELM=elm-make
-CLOSURE=java -jar /home/aravinda/bin/compiler-latest/compiler.jar
+ELM=elm
+CLOSURE=java -jar /home/aravinda/Downloads/closure-compiler-v20191027.jar
 CLOSURE_FLAGS=
 
 ELM_SRC=src
@@ -16,7 +16,7 @@ $(STATIC_JS)/app.min.js: $(ELM_SRC)/app.js
 	$(CLOSURE) $(CLOSURE_FLAGS) --js $(ELM_SRC)/app.js --js_output_file $(STATIC_JS)/app.min.js
 
 $(ELM_SRC)/app.js: $(ELM_SRC)/Main.elm
-	cd $(ELM_SRC) && $(ELM) Main.elm --output app.js
+	cd $(ELM_SRC) && $(ELM) make Main.elm --optimize --output app.js
 
 $(STATIC_JS)/kn.js: $(KN_SRC)/src/datagen.py $(KN_SRC)/src/base.js $(KN_SRC)/src/testsgen.py $(KN_SRC)/src/tests_manual.js
 	cd $(KN_SRC) && make gen
