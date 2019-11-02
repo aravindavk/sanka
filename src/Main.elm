@@ -6,13 +6,14 @@ import Html.Attributes
     exposing
         ( class
         , placeholder
-        , type'
+        , type_
         , checked
         , readonly
         , value
         , title
+        , id
         )
-import Html.App as Html
+import Browser
 import Html.Events
     exposing
         ( onInput
@@ -22,7 +23,7 @@ import Html.Events
 
 
 main =
-    Html.program
+    Browser.element
         { init = init
         , view = view
         , update = update
@@ -39,6 +40,7 @@ type alias Model =
     , outputText : String
     , a2u : Bool
     , englishNumbers : Bool
+    , removeExtraSpaces : Bool
     }
 
 
@@ -46,9 +48,9 @@ type alias Model =
 -- INIT
 
 
-init : ( Model, Cmd Msg )
-init =
-    ( Model "" "" True False, Cmd.none )
+init : () -> (Model, Cmd Msg)
+init _ =
+    ( Model "" "" True False False, Cmd.none )
 
 
 
@@ -59,20 +61,21 @@ type Msg
     = Check String
     | ConvertedText String
     | EnglishNumbers Bool
+    | RemoveExtraSpaces Bool
     | AsciiToUnicode Bool
     | UnicodeToAscii Bool
     | ClearInput
 
 
-port convert : ( String, Bool, Bool ) -> Cmd msg
+port convert : ( {input: String, a2u: Bool, englishNumbers: Bool, removeExtraSpaces: Bool} ) -> Cmd msg
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         Check inputText ->
-            ( Model inputText "" model.a2u model.englishNumbers
-            , convert ( inputText, model.a2u, model.englishNumbers )
+            ( Model inputText "" model.a2u model.englishNumbers model.removeExtraSpaces
+            , convert ( {input=inputText, a2u=model.a2u, englishNumbers=model.englishNumbers, removeExtraSpaces=model.removeExtraSpaces} )
             )
 
         ConvertedText output ->
@@ -80,21 +83,26 @@ update msg model =
 
         EnglishNumbers value ->
             ( { model | englishNumbers = value }
-            , convert ( model.inputText, model.a2u, value )
+            , convert ( {input=model.inputText, a2u=model.a2u, englishNumbers=value, removeExtraSpaces=model.removeExtraSpaces} )
+            )
+
+        RemoveExtraSpaces value ->
+            ( { model | removeExtraSpaces = value }
+            , convert ( {input=model.inputText, a2u=model.a2u, englishNumbers=model.englishNumbers, removeExtraSpaces=value} )
             )
 
         AsciiToUnicode value ->
             ( { model | a2u = value }
-            , convert ( model.inputText, value, model.englishNumbers )
+            , convert ( {input=model.inputText, a2u=value, englishNumbers=model.englishNumbers, removeExtraSpaces=model.removeExtraSpaces} )
             )
 
         UnicodeToAscii value ->
             ( { model | a2u = (value == False) }
-            , convert ( model.inputText, (value == False), model.englishNumbers )
+            , convert ( {input=model.inputText, a2u=(value == False), englishNumbers=model.englishNumbers, removeExtraSpaces=model.removeExtraSpaces} )
             )
 
         ClearInput ->
-            ( Model "" "" True False, Cmd.none )
+            ( Model "" "" True False False, Cmd.none )
 
 
 
@@ -130,23 +138,34 @@ view model =
             else
                 (List.length (String.words model.inputText))
     in
+        div [ id "app" ]
+        [
         div [ class "container" ]
             [ div [ class "controls" ]
                 [ div [ class "english-numbers" ]
                     [ label []
                         [ input
-                            [ type' "checkbox"
+                            [ type_ "checkbox"
                             , checked model.englishNumbers
                             , onCheck EnglishNumbers
                             ]
                             []
                         , text "ಆಂಗ್ಲ ಸಂಖ್ಯೆಗಳು"
+                        ],
+                      label []
+                        [ input
+                            [ type_ "checkbox"
+                            , checked model.removeExtraSpaces
+                            , onCheck RemoveExtraSpaces
+                            ]
+                            []
+                        , text "ಹೆಚ್ಚಿನ Space ತೆಗೆಯಿರಿ"
                         ]
                     ]
                 , div [ class "convert-type" ]
                     [ label []
                         [ input
-                            [ type' "radio"
+                            [ type_ "radio"
                             , checked (model.a2u == True)
                             , onCheck AsciiToUnicode
                             ]
@@ -155,7 +174,7 @@ view model =
                         ]
                     , label []
                         [ input
-                            [ type' "radio"
+                            [ type_ "radio"
                             , checked (model.a2u == False)
                             , onCheck UnicodeToAscii
                             ]
@@ -169,9 +188,9 @@ view model =
             , div [ class "left" ]
                 [ span
                     [ class "num-words"
-                    , title ((toString num_words) ++ " ಪದ(ಗಳು)")
+                    , title ((String.fromInt num_words) ++ " ಪದ(ಗಳು)")
                     ]
-                    [ text ((toString num_words))
+                    [ text ((String.fromInt num_words))
                     ]
                 , text (placeholderTextLeft model.a2u)
                 , textarea
@@ -185,6 +204,7 @@ view model =
                 , textarea [ readonly True ] [ text model.outputText ]
                 ]
             , div [ class "clear" ] []
+            ]
             ]
 
 
